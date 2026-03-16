@@ -180,6 +180,7 @@ const main = () => {
             const time_end = +el.getAttribute("data-end");
             if (time_start <= min_since_midnight && min_since_midnight < time_end) {
                 el.classList.add("highlight");
+                el.setAttribute("data-time-to-end", time_end - min_since_midnight);
             } else {
                 el.classList.remove("highlight");
             }
