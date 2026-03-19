@@ -12,8 +12,8 @@ const date_template = (name, start, end) => {
     return `<p class="date" data-start="${time_start}" data-end="${time_end}"><b>${name}</b> <span>${start} - ${end}</span></p>`;
 };
     
-const two_lunch_template = (id, header, first_lunch_times, second_lunch_times) => `
-    <article id="${id}">
+const two_lunch_template = (header, first_lunch_times, second_lunch_times) => `
+    <article>
         <header>
             <h2>${header}</h2>
         </header>
@@ -30,8 +30,8 @@ const two_lunch_template = (id, header, first_lunch_times, second_lunch_times) =
     </article>
 `;
 
-const one_lunch_template = (id, header, times) => `
-    <article id="${id}">
+const one_lunch_template = (header, times) => `
+    <article>
         <header>
             <h2>${header}</h2>
         </header>
@@ -44,7 +44,7 @@ const one_lunch_template = (id, header, times) => `
 const all_schedules = [
     {
         selector_func: (day = (new Date()).getDay()) => (day === 1 || day === 5),
-        template: two_lunch_template("mon/fri", "Mondays / Fridays", [
+        template: two_lunch_template("Mondays / Fridays", [
             ["Period 1:", "8:30", "9:59"],
             ["Period 2:", "10:07", "11:36"],
             ["Lunch:", "11:36", "12:06"],
@@ -60,7 +60,7 @@ const all_schedules = [
     },
     {
         selector_func: (day = (new Date()).getDay()) => (day === 2 || day === 4),
-        template: two_lunch_template("tue/thr", "Tuesdays / Thursdays", [
+        template: two_lunch_template("Tuesdays / Thursdays", [
             ["Period 1:", "8:30", "9:55"],
             ["Period 2:", "10:03", "11:44"],
             ["Lunch:", "11:44", "12:14"],
@@ -77,7 +77,7 @@ const all_schedules = [
     },
     {
         selector_func: (day = (new Date()).getDay()) => (day === 3),
-        template: two_lunch_template("wed", "Wednesdays", [
+        template: two_lunch_template("Wednesdays", [
             ["Period 1:", "9:30", "10:44"],
             ["Period 2:", "10:52", "12:06"],
             ["Lunch:", "12:06", "12:36"],
@@ -92,16 +92,24 @@ const all_schedules = [
         ])
     },
     {
-        selector_func: () => (["10/9","10/10","12/18","12/19","3/12","3/13","5/27","5/28"].includes(md_string(new Date()))),
-        template: one_lunch_template("mid-final", "Midterms/Finals", [
-            ["Period 1/3:", "8:30", "10:30"],
+        selector_func: () => (["10/9", "12/19", "3/12", "5/28"].includes(md_string(new Date()))),
+        template: one_lunch_template("Midterms/Finals (Periods 1/2)", [
+            ["Period 1:", "8:30", "10:30"],
             ["Break:", "10:30", "10:42"],
-            ["Period 2/4:", "10:50", "12:50"]
+            ["Period 2:", "10:50", "12:50"]
         ])
     },
     {
-        selector_func: () => (["10/8","12/17","3/11"].includes(md_string(new Date()))),
-        template: two_lunch_template("wed-full", "Wednesday Full Day", [
+        selector_func: () => (["10/10", "12/18", "3/13", "5/27"].includes(md_string(new Date()))),
+        template: one_lunch_template("Midterms/Finals (Periods 3/4)", [
+            ["Period 3:", "8:30", "10:30"],
+            ["Break:", "10:30", "10:42"],
+            ["Period 4:", "10:50", "12:50"]
+        ])
+    },
+    {
+        selector_func: () => (["10/8", "12/17", "3/11"].includes(md_string(new Date()))),
+        template: two_lunch_template("Wednesday Full Day", [
             ["Period 1:", "8:30", "9:59"],
             ["Period 2:", "10:07", "11:36"],
             ["Lunch:", "11:36", "12:06"],
@@ -116,8 +124,8 @@ const all_schedules = [
         ])
     },
     {
-        selector_func: () => (["8/7","10/30","1/26"].includes(md_string(new Date()))),
-        template: one_lunch_template("extended-1-lunch", "Extended 1-lunch", [
+        selector_func: () => (["8/7", "10/30", "1/26"].includes(md_string(new Date()))),
+        template: one_lunch_template("Extended 1-lunch", [
             ["Period 1:", "8:30", "9:55"],
             ["Period 2:", "10:03", "11:28"],
             ["Lunch:", "11:28", "12:14"],
@@ -126,8 +134,8 @@ const all_schedules = [
         ])
     },
     {
-        selector_func: () => (["8/8","1/30","5/22"].includes(md_string(new Date()))),
-        template: one_lunch_template("rally", "Rally", [
+        selector_func: () => (["8/8", "1/30", "5/22"].includes(md_string(new Date()))),
+        template: one_lunch_template("Rally", [
             ["Period 1:", "8:30", "9:49"],
             ["Period 2:", "9:57", "11:16"],
             ["Lunch:", "11:16", "11:46"],
@@ -137,8 +145,8 @@ const all_schedules = [
         ])
     },
     {
-        selector_func: () => (["8/14","1/12"].includes(md_string(new Date()))),
-        template: one_lunch_template("minimum-day", "Minimum Day", [
+        selector_func: () => (["8/14", "1/12"].includes(md_string(new Date()))),
+        template: one_lunch_template("Minimum Day", [
             ["Period 1:", "8:30", "9:26"],
             ["Period 2:", "9:34", "10:30"],
             ["Period 3:", "10:38", "11:34"],
@@ -147,8 +155,8 @@ const all_schedules = [
         ])
     },
     {
-        selector_func: () => (["4/13","4/14","4/16","4/17"].includes(md_string(new Date()))),
-        template: two_lunch_template("testing", "CAASPP Testing", [
+        selector_func: () => (["4/13", "4/14", "4/16", "4/17"].includes(md_string(new Date()))),
+        template: two_lunch_template("CAASPP Testing", [
             ["Period 1:", "8:30", "9:35"],
             ["Testing:", "9:43", "11:11"],
             ["Lunch:", "11:11", "11:41"],
@@ -166,7 +174,20 @@ const all_schedules = [
     },
 ];
 
-const current_schedule = all_schedules.findLast((schedule) => schedule.selector_func());
+const fallback_schedule = {
+    template: `
+        <article>
+            <header>
+                <h2>Weekends</h2>
+            </header>
+            <div>
+                No school today!
+            </div>
+        </article>
+    `
+};
+
+const current_schedule = all_schedules.findLast((schedule) => schedule.selector_func()) ?? fallback_schedule;
 
 const main = () => {
     const find_highlight = () => {
@@ -202,7 +223,8 @@ const main = () => {
         <div id="current-sched">
             ${current_schedule.template.replace(`class="placeholder"`, `class="grid"`)}
         </div>
-        </br>
+        <hr>
+        <h2>All Schedules</h2>
         <div class="grid-container">
             ${all_schedules.map((schedule) => schedule.template).join("")}
         </div>
