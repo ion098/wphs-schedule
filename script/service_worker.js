@@ -34,7 +34,7 @@ const fetch_from_network = async (request) => {
 
 const cache_first = async (request) => {
     try {
-        return await Promise.any(fetch_from_cache(request), fetch_from_network(request));
+        return await Promise.any([fetch_from_cache(request), fetch_from_network(request)]);
     } catch (error) {
         return new Response('Network error happened', {
             status: 408,
