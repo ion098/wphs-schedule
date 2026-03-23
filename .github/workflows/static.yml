@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Add redirect
-        run: mv redirect.txt index.html
+        run: mv redirect.html index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
