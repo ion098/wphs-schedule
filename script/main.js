@@ -234,5 +234,5 @@ const main = () => {
     setInterval(find_highlight, 1000 * 60);
 };
 
-navigator.serviceWorker.register("/script/service_worker.js");
+navigator.serviceWorker.register("/script/service_worker.js", { scope: "/" });
 main();
