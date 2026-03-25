@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Install Closure Compiler
-export PATH="$PATH:$(yarn global bin)"
-yarn global add google-closure-compiler
-
 # Install minhtml
 wget https://github.com/wilsonzlin/minify-html/releases/download/v0.18.1/minhtml-0.18.1-x86_64-unknown-linux-gnu -O minhtml
 chmod +x ./minhtml
@@ -17,8 +13,8 @@ cat <<EOF > $EXTERNS
 var caches;
 EOF
 
-google-closure-compiler -O ADVANCED script/main.js | sponge script/main.js &
-google-closure-compiler -O ADVANCED service_worker.js --externs $EXTERNS | sponge service_worker.js &
+yarn dlx google-closure-compiler -O ADVANCED script/main.js | sponge script/main.js &
+yarn dlx google-closure-compiler -O ADVANCED service_worker.js --externs $EXTERNS | sponge service_worker.js &
 ./minhtml index.html --minify-css | sponge index.html &
 
 wait
