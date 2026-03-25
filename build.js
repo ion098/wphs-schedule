@@ -14,15 +14,20 @@ async function main() {
   try {
     console.log('Starting build...\n');
 
-    // Check if Java is available; install if not
+    // Check if Java is available; install via direct download if not
     try {
       execSync('java -version', { stdio: 'pipe', timeout: 5000 });
     } catch (e) {
-      console.log('Java not found. Attempting to install...');
+      console.log('Java not found. Downloading and installing OpenJDK 17...');
       try {
-        execSync('apt-get update && apt-get install -y default-jre', { stdio: 'inherit', timeout: 120000 });
-      } catch (installError) {
-        throw new Error('Failed to install Java. Ensure the build environment has apt-get available or Java pre-installed.');
+        const javaUrl = 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1+12/OpenJDK17U-jre_x64_linux_hotspot_17.0.1_12.tar.gz';
+        const javaPath = join(tmpdir(), 'java.tar.gz');
+        execSync(`curl -L --output ${javaPath} ${javaUrl}`, { stdio: 'inherit', timeout: 120000 });
+        execSync(`tar -xzf ${javaPath} -C /usr/local/`, { stdio: 'inherit' });
+        execSync(`ln -sf /usr/local/jdk-17.0.1+12/bin/java /usr/local/bin/java`, { stdio: 'inherit' });
+        console.log('Java installed successfully.\n');
+      } catch (err) {
+        throw new Error('Failed to download and install Java. Check network access and disk space.');
       }
     }
 
