@@ -1,15 +1,25 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
+import { execSync } from 'child_process';
 import { minifyHTMLLiterals, defaultMinifyOptions } from 'minify-html-literals';
 import { compiler } from 'google-closure-compiler';
 import minifyHTML from 'html-minifier-next';
 
 async function main() {
+  const tempFilesToCleanup = [];
+  
   try {
     console.log('Starting build...\n');
+
+    // Check if Java is available (required for Google Closure Compiler)
+    try {
+      execSync('java -version', { stdio: 'pipe', timeout: 5000 });
+    } catch (e) {
+      throw new Error('Java is required to run Google Closure Compiler, but it is not installed or not available in PATH. Cloudflare Pages may not have Java available.');
+    }
 
     // Step 1: Minify HTML literals in main.js
     console.log('Minifying HTML literals in main.js...');
@@ -38,10 +48,11 @@ async function main() {
 
     // Step 2: Compile main.js with Google Closure Compiler
     console.log('Compiling main.js with Google Closure Compiler...');
-    const mainTmpFile = join(tmpdir(), `main-src-${Date.now()}.js`);
-    const mainOutFile = join(tmpdir(), `main-out-${Date.now()}.js`);
-    writeFileSync(mainTmpFile, mainJsSource);
+    const mainTmpFile = join(tmpdir(), `main-src-${Date.now()}-${Math.random().toString(36).slice(2)}.js`);
+    const mainOutFile = join(tmpdir(), `main-out-${Date.now()}-${Math.random().toString(36).slice(2)}.js`);
+    tempFilesToCleanup.push(mainTmpFile, mainOutFile);
     
+    writeFileSync(mainTmpFile, mainJsSource);
     await compileWithClosureCompiler(mainTmpFile, mainOutFile, null);
     const mainCompiled = readFileSync(mainOutFile, 'utf-8');
     writeFileSync('script/main.js', mainCompiled);
@@ -50,9 +61,10 @@ async function main() {
     // Step 3: Compile service_worker.js with externs
     console.log('Compiling service_worker.js with Google Closure Compiler...');
     const serviceWorkerSource = readFileSync('service_worker.js', 'utf-8');
-    const externsFile = join(tmpdir(), `externs-${Date.now()}.js`);
-    const swTmpFile = join(tmpdir(), `sw-src-${Date.now()}.js`);
-    const swOutFile = join(tmpdir(), `sw-out-${Date.now()}.js`);
+    const externsFile = join(tmpdir(), `externs-${Date.now()}-${Math.random().toString(36).slice(2)}.js`);
+    const swTmpFile = join(tmpdir(), `sw-src-${Date.now()}-${Math.random().toString(36).slice(2)}.js`);
+    const swOutFile = join(tmpdir(), `sw-out-${Date.now()}-${Math.random().toString(36).slice(2)}.js`);
+    tempFilesToCleanup.push(externsFile, swTmpFile, swOutFile);
     
     const externs = `/**
  * @type {CacheStorage}
@@ -82,10 +94,20 @@ var caches;
     console.log('✓ index.html minified\n');
 
     console.log('✓ Build completed successfully!');
-    process.exit(0);
   } catch (error) {
     console.error('✗ Build failed:', error.message);
     process.exit(1);
+  } finally {
+    // Clean up temporary files
+    tempFilesToCleanup.forEach(file => {
+      try {
+        if (existsSync(file)) {
+          unlinkSync(file);
+        }
+      } catch (e) {
+        // Silently ignore cleanup errors
+      }
+    });
   }
 }
 
@@ -104,11 +126,20 @@ function compileWithClosureCompiler(inputFile, outputFile, externsFile = null) {
 
     const c = new compiler(options);
     c.run((exitCode, stdout, stderr) => {
+      // Log compiler output for debugging
+      if (stdout) console.log('Compiler stdout:', stdout);
+      if (stderr && stderr.trim()) console.error('Compiler stderr:', stderr);
+      
       // exitCode 0 = success, 1 = warnings (which we can ignore with warning_level: quiet)
       if (exitCode <= 1) {
-        resolve();
+        // Verify output file was actually created
+        if (!existsSync(outputFile)) {
+          reject(new Error(`Compilation exited with code ${exitCode} but output file was not created at ${outputFile}`));
+        } else {
+          resolve();
+        }
       } else {
-        reject(new Error(`Compilation failed: ${stderr || stdout}`));
+        reject(new Error(`Compilation failed with exit code ${exitCode}: ${stderr || stdout}`));
       }
     });
   });
