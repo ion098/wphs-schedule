@@ -14,11 +14,16 @@ async function main() {
   try {
     console.log('Starting build...\n');
 
-    // Check if Java is available (required for Google Closure Compiler)
+    // Check if Java is available; install if not
     try {
       execSync('java -version', { stdio: 'pipe', timeout: 5000 });
     } catch (e) {
-      throw new Error('Java is required to run Google Closure Compiler, but it is not installed or not available in PATH. Cloudflare Pages may not have Java available.');
+      console.log('Java not found. Attempting to install...');
+      try {
+        execSync('apt-get update && apt-get install -y default-jre', { stdio: 'inherit', timeout: 120000 });
+      } catch (installError) {
+        throw new Error('Failed to install Java. Ensure the build environment has apt-get available or Java pre-installed.');
+      }
     }
 
     // Step 1: Minify HTML literals in main.js
@@ -127,19 +132,19 @@ function compileWithClosureCompiler(inputFile, outputFile, externsFile = null) {
     const c = new compiler(options);
     c.run((exitCode, stdout, stderr) => {
       // Log compiler output for debugging
-      if (stdout) console.log('Compiler stdout:', stdout);
-      if (stderr && stderr.trim()) console.error('Compiler stderr:', stderr);
+      if (stdout && stdout.trim()) console.log('Compiler output:', stdout);
+      if (stderr && stderr.trim()) console.error('Compiler errors:', stderr);
       
       // exitCode 0 = success, 1 = warnings (which we can ignore with warning_level: quiet)
       if (exitCode <= 1) {
         // Verify output file was actually created
         if (!existsSync(outputFile)) {
-          reject(new Error(`Compilation exited with code ${exitCode} but output file was not created at ${outputFile}`));
+          reject(new Error(`Compilation succeeded (exit code ${exitCode}) but output file was not created at ${outputFile}. Check compiler errors above.`));
         } else {
           resolve();
         }
       } else {
-        reject(new Error(`Compilation failed with exit code ${exitCode}: ${stderr || stdout}`));
+        reject(new Error(`Compilation failed with exit code ${exitCode}. ${stderr || stdout || 'No error details available.'}`));
       }
     });
   });
