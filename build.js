@@ -22,9 +22,20 @@ async function main() {
       try {
         const javaUrl = 'https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.1+12/OpenJDK17U-jre_x64_linux_hotspot_17.0.1_12.tar.gz';
         const javaPath = join(tmpdir(), 'java.tar.gz');
+        const javaDir = join(process.cwd(), '.java-runtime');
+        
+        // Download
         execSync(`curl -L --output ${javaPath} ${javaUrl}`, { stdio: 'inherit', timeout: 120000 });
-        execSync(`tar -xzf ${javaPath} -C /usr/local/`, { stdio: 'inherit' });
-        execSync(`ln -sf /usr/local/jdk-17.0.1+12/bin/java /usr/local/bin/java`, { stdio: 'inherit' });
+        
+        // Create directory if needed
+        execSync(`mkdir -p ${javaDir}`);
+        
+        // Extract to writable location
+        execSync(`tar -xzf ${javaPath} -C ${javaDir}`, { stdio: 'inherit' });
+        
+        // Add to PATH
+        process.env.PATH = `${join(javaDir, 'jdk-17.0.1+12-jre', 'bin')}:${process.env.PATH}`;
+        
         console.log('Java installed successfully.\n');
       } catch (err) {
         throw new Error('Failed to download and install Java. Check network access and disk space.');
