@@ -1,6 +1,6 @@
 /**
  * Adds multiple resources to the service worker cache.
- * @param {Iterable<RequestInfo>} resources The resources to be cached
+ * @param {Array<RequestInfo>} resources The resources to be cached
  */
 const add_resources_to_cache = async (resources) => {
     const cache = await caches.open('v1');
@@ -36,8 +36,8 @@ const cache_first = async (request) => {
     try {
         return await Promise.any([fetch_from_cache(request), fetch_from_network(request)]);
     } catch (error) {
-        return new Response('Network error happened', {
-            status: 408,
+        return new Response('Offline and not in cache', {
+            status: 503,
             headers: { 'Content-Type': 'text/plain' },
         });
     }
@@ -48,7 +48,7 @@ self.addEventListener('install', (event) => {
         add_resources_to_cache([
             './',
             './index.html',
-            './style/pico.min.css',
+            './style/pico.trimmed.min.css',
             './main.js',
         ])
     );

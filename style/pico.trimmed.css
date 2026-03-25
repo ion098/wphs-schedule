@@ -1,0 +1,466 @@
+@charset "UTF-8";/*!
+ * Pico CSS ✨ v2.1.1 (https://picocss.com)
+ * Copyright 2019-2025 - Licensed under MIT
+ */
+
+/* note: this file is manually trimmed down from pico.min.css */
+:host,
+:root {
+    --pico-line-height: 1.5;
+    --pico-font-weight: 400;
+    --pico-font-size: 100%;
+    --pico-border-width: 0.0625rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    --pico-font-weight: 700;
+}
+
+h1 {
+    --pico-font-size: 2rem;
+    --pico-line-height: 1.125;
+}
+
+h2 {
+    --pico-font-size: 1.75rem;
+    --pico-line-height: 1.15;
+}
+
+h3 {
+    --pico-font-size: 1.5rem;
+    --pico-line-height: 1.175;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    --pico-border-width: 0.125rem;
+}
+
+:host(:not([data-theme="dark"])),
+:root:not([data-theme="dark"]),
+[data-theme="light"] {
+    color-scheme: light;
+    --pico-background-color: #fff;
+    --pico-color: #373c44;
+    --pico-muted-border-color: rgb(231, 234, 239.5);
+    --pico-primary: #0172ad;
+    --pico-primary-background: #0172ad;
+    --pico-primary-border: var(--pico-primary-background);
+    --pico-primary-underline: rgba(1, 114, 173, 0.5);
+    --pico-primary-inverse: #fff;
+    --pico-box-shadow: 0.0145rem 0.029rem 0.174rem rgba(129, 145, 181, 0.01698), 0.0335rem 0.067rem 0.402rem rgba(129, 145, 181, 0.024), 0.0625rem 0.125rem 0.75rem rgba(129, 145, 181, 0.03), 0.1125rem 0.225rem 1.35rem rgba(129, 145, 181, 0.036), 0.2085rem 0.417rem 2.502rem rgba(129, 145, 181, 0.04302), 0.5rem 1rem 6rem rgba(129, 145, 181, 0.06), 0 0 0 0.0625rem rgba(129, 145, 181, 0.015);
+    --pico-h1-color: #2d3138;
+    --pico-h2-color: #373c44;
+    --pico-h3-color: #424751;
+    --pico-h4-color: #4d535e;
+    --pico-h5-color: #5c6370;
+    --pico-h6-color: #646b79;
+    --pico-form-element-background-color: rgb(251, 251.5, 252.25);
+    --pico-form-element-border-color: #cfd5e2;
+    --pico-form-element-color: #23262c;
+    --pico-card-background-color: var(--pico-background-color);
+    --pico-card-border-color: var(--pico-muted-border-color);
+    --pico-card-box-shadow: var(--pico-box-shadow);
+    --pico-card-sectioning-background-color: rgb(251, 251.5, 252.25);
+}
+
+[type="checkbox"],
+[type="radio"],
+[type="range"],
+progress {
+    accent-color: var(--pico-primary);
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
+:where(:host),
+:where(:root) {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+    background-color: var(--pico-background-color);
+    color: var(--pico-color);
+    font-weight: var(--pico-font-weight);
+    font-size: var(--pico-font-size);
+    line-height: var(--pico-line-height);
+    font-family:   system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif,  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    text-underline-offset:  0.1rem;
+    text-rendering: optimizelegibility;
+    overflow-wrap: break-word;
+    tab-size: 4;
+}
+
+body {
+    width: 100%;
+    margin: 0px;
+}
+
+main {
+    display: block;
+}
+
+body>footer,
+body>header,
+body>main {
+    padding-block: 1rem;
+}
+
+.container,
+.container-fluid {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.grid {
+    column-gap:  1rem;
+    row-gap:  1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.grid>* {
+    min-width: 0px;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+address,
+blockquote,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+    margin-top: 0px;
+    margin-bottom:  1rem;
+    color: var(--pico-color);
+    font-style: normal;
+    font-weight: var(--pico-font-weight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0px;
+    margin-bottom:  1rem;
+    color: var(--pico-color);
+    font-weight: var(--pico-font-weight);
+    font-size: var(--pico-font-size);
+    line-height: var(--pico-line-height);
+    font-family:   system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif,  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+h1 {
+    --pico-color: var(--pico-h1-color);
+}
+
+h2 {
+    --pico-color: var(--pico-h2-color);
+}
+
+h3 {
+    --pico-color: var(--pico-h3-color);
+}
+
+p {
+    margin-bottom:  1rem;
+}
+
+:where(ol, ul) li {
+    margin-bottom: calc( 1rem * .25);
+}
+
+ul li {
+    list-style: square;
+}
+
+:where(a:not([role="button"])),
+[role="link"] {
+    --pico-color: var(--pico-primary);
+    --pico-background-color: transparent;
+    outline: 0px;
+    background-color: var(--pico-background-color);
+    color: var(--pico-color);
+    text-decoration-color:  var(--pico-primary-underline);
+    text-underline-offset: 0.125em;
+    transition: background-color  0.2s ease-in-out, color  0.2s ease-in-out, text-decoration  0.2s ease-in-out, box-shadow  0.2s ease-in-out, -webkit-text-decoration  0.2s ease-in-out;
+}
+
+hr {
+    height: 0px;
+    margin:  1rem 0;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-image: initial;
+    border-top: 1px solid var(--pico-muted-border-color);
+    color: inherit;
+}
+
+input,
+optgroup,
+select,
+textarea {
+    margin: 0px;
+    font-size: 1rem;
+    line-height: var(--pico-line-height);
+    font-family: inherit;
+    letter-spacing: inherit;
+}
+
+input {
+    overflow: visible;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    padding: 0px;
+}
+
+fieldset legend,
+label {
+    display: block;
+    margin-bottom: calc(1rem * .375);
+    color: var(--pico-color);
+    font-weight: var(--pico-form-label-font-weight, var(--pico-font-weight));
+}
+
+input,
+select,
+textarea {
+    --pico-background-color: var(--pico-form-element-background-color);
+    --pico-border-color: var(--pico-form-element-border-color);
+    --pico-color: var(--pico-form-element-color);
+    --pico-box-shadow: none;
+    border: var(--pico-border-width) solid var(--pico-border-color);
+    border-radius:  0.25rem;
+    outline: 0px;
+    background-color: var(--pico-background-color);
+    box-shadow: var(--pico-box-shadow);
+    color: var(--pico-color);
+    font-weight: var(--pico-font-weight);
+    transition: background-color  0.2s ease-in-out, border-color  0.2s ease-in-out, color  0.2s ease-in-out, box-shadow  0.2s ease-in-out;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    appearance: none;
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: -0.125em;
+    margin-inline-end: 0.5em;
+    border-width: var(--pico-border-width);
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:checked:active,
+[type="checkbox"]:checked:focus,
+[type="radio"]:checked,
+[type="radio"]:checked:active,
+[type="radio"]:checked:focus {
+    --pico-background-color: var(--pico-primary-background);
+    --pico-border-color: var(--pico-primary-border);
+    background-image:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(255, 255, 255)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-position: center center;
+    background-size: 0.75em;
+    background-repeat: no-repeat;
+}
+
+[type="checkbox"]~label,
+[type="radio"]~label {
+    display: inline-block;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+[type="radio"] {
+    border-radius: 50%;
+}
+
+[type="radio"]:checked,
+[type="radio"]:checked:active,
+[type="radio"]:checked:focus {
+    --pico-background-color: var(--pico-primary-inverse);
+    border-width: 0.35em;
+    background-image: none;
+}
+
+article {
+    margin-bottom: 1rem;
+    padding: 1rem 1rem;
+    border-radius:  0.25rem;
+    background: var(--pico-card-background-color);
+    box-shadow: var(--pico-card-box-shadow);
+}
+
+article>footer,
+article>header {
+    margin-right: calc(1rem * -1);
+    margin-left: calc(1rem * -1);
+    padding: calc(1rem * .66) 1rem;
+    background-color: var(--pico-card-sectioning-background-color);
+}
+
+article>header {
+    margin-top: calc(1rem * -1);
+    margin-bottom: 1rem;
+    border-bottom: var(--pico-border-width) solid var(--pico-card-border-color);
+    border-top-right-radius:  0.25rem;
+    border-top-left-radius:  0.25rem;
+}
+
+nav,
+nav ul {
+    display: flex;
+}
+
+nav {
+    justify-content: space-between;
+    overflow: visible;
+}
+
+nav ol,
+nav ul {
+    align-items: center;
+    margin-bottom: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+nav ol:first-of-type,
+nav ul:first-of-type {
+    margin-left: calc( 0.5rem * -1);
+}
+
+nav ol:last-of-type,
+nav ul:last-of-type {
+    margin-right: calc( 0.5rem * -1);
+}
+
+nav li {
+    display: inline-block;
+    margin: 0px;
+    padding:  1rem  0.5rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+@media ((min-width: 576px)) {
+
+    :host,
+    :root {
+        --pico-font-size: 106.25%;
+    }
+}
+
+@media ((min-width: 768px)) {
+
+    :host,
+    :root {
+        --pico-font-size: 112.5%;
+    }
+}
+
+@media ((min-width: 1024px)) {
+
+    :host,
+    :root {
+        --pico-font-size: 118.75%;
+    }
+}
+
+@media ((min-width: 1280px)) {
+
+    :host,
+    :root {
+        --pico-font-size: 125%;
+    }
+}
+
+@media ((min-width: 1536px)) {
+
+    :host,
+    :root {
+        --pico-font-size: 131.25%;
+    }
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+
+    :host(:not([data-theme])),
+    :root:not([data-theme]) {
+        color-scheme: dark;
+        --pico-background-color: rgb(19, 22.5, 30.5);
+        --pico-color: #c2c7d0;
+        --pico-muted-border-color: #202632;
+        --pico-primary: #01aaff;
+        --pico-primary-background: #0172ad;
+        --pico-primary-border: var(--pico-primary-background);
+        --pico-primary-underline: rgba(1, 170, 255, 0.5);
+        --pico-primary-inverse: #fff;
+        --pico-box-shadow: 0.0145rem 0.029rem 0.174rem rgba(7, 8.5, 12, 0.01698), 0.0335rem 0.067rem 0.402rem rgba(7, 8.5, 12, 0.024), 0.0625rem 0.125rem 0.75rem rgba(7, 8.5, 12, 0.03), 0.1125rem 0.225rem 1.35rem rgba(7, 8.5, 12, 0.036), 0.2085rem 0.417rem 2.502rem rgba(7, 8.5, 12, 0.04302), 0.5rem 1rem 6rem rgba(7, 8.5, 12, 0.06), 0 0 0 0.0625rem rgba(7, 8.5, 12, 0.015);
+        --pico-h1-color: #f0f1f3;
+        --pico-h2-color: #e0e3e7;
+        --pico-h3-color: #c2c7d0;
+        --pico-h4-color: #b3b9c5;
+        --pico-h5-color: #a4acba;
+        --pico-h6-color: #8891a4;
+        --pico-form-element-background-color: rgb(28, 33, 43.5);
+        --pico-form-element-border-color: #2a3140;
+        --pico-form-element-color: #e0e3e7;
+        --pico-card-background-color: #181c25;
+        --pico-card-border-color: var(--pico-card-background-color);
+        --pico-card-box-shadow: var(--pico-box-shadow);
+        --pico-card-sectioning-background-color: rgb(26, 30.5, 40.25);
+    }
+
+    @media ((min-width: 768px)) {
+        .grid {
+            grid-template-columns: repeat(auto-fit, minmax(0%, 1fr));
+        }
+    }
+
+    @media ((prefers-reduced-motion: reduce)) {
+
+        :not([aria-busy="true"]),
+        :not([aria-busy="true"])::after,
+        :not([aria-busy="true"])::before {
+            background-attachment: initial !important;
+            animation-duration: 1ms !important;
+            animation-delay: -1ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+            transition-delay: 0s !important;
+            transition-duration: 0s !important;
+        }
+    }
+}
