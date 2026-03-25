@@ -6,13 +6,18 @@ const time_str_to_min = (time_str) => {
     return min + 60 * (hour % 12) + ((hour % 12 <= 6) ? 12 * 60 : 0);
 }
 
+const html = (strings, ...values) =>
+    strings.reduce((acc, str, i) => {
+        return acc + str + (values[i] || '');
+    }, '');
+
 const date_template = (name, start, end) => {
     const time_start = time_str_to_min(start);
     const time_end = time_str_to_min(end);
-    return `<p class="date" data-start="${time_start}" data-end="${time_end}"><b>${name}</b> <span>${start} - ${end}</span></p>`;
+    return html`<p class="date" data-start="${time_start}" data-end="${time_end}"><b>${name}</b> <span>${start} - ${end}</span></p>`;
 };
-    
-const two_lunch_template = (header, first_lunch_times, second_lunch_times) => `
+
+const two_lunch_template = (header, first_lunch_times, second_lunch_times) => html`
     <article>
         <header>
             <h2>${header}</h2>
@@ -30,7 +35,7 @@ const two_lunch_template = (header, first_lunch_times, second_lunch_times) => `
     </article>
 `;
 
-const one_lunch_template = (header, times) => `
+const one_lunch_template = (header, times) => html`
     <article>
         <header>
             <h2>${header}</h2>
@@ -66,7 +71,7 @@ const all_schedules = [
             ["Lunch:", "11:44", "12:14"],
             ["Period 3:", "12:22", "1:47"],
             ["Period 4:", "1:55", "3:20"]
-            
+
         ], [
             ["Period 1:", "8:30", "9:55"],
             ["Period 2:", "10:03", "11:44"],
@@ -175,7 +180,7 @@ const all_schedules = [
 ];
 
 const fallback_schedule = {
-    template: `
+    template: html`
         <article>
             <header>
                 <h2>Weekends</h2>
@@ -218,8 +223,8 @@ const main = () => {
     if (prev_select) {
         document.getElementById(prev_select)["checked"] = true;
     }
-    
-    document.querySelector("main").innerHTML = `
+
+    document.querySelector("main").innerHTML = html`
         <div id="current-sched">
             ${current_schedule.template.replace(`class="placeholder"`, `class="grid"`)}
         </div>
@@ -229,7 +234,7 @@ const main = () => {
             ${all_schedules.map((schedule) => schedule.template).join("")}
         </div>
     `;
-    
+
     find_highlight();
     setInterval(find_highlight, 1000 * 60);
 };
