@@ -1,5 +1,6 @@
 {
   "devDependencies": {
     "parcel": "^2.16.4"
-  }
+  },
+  "packageManager": "yarn@4.13.0"
 }
