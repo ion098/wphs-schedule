@@ -48,8 +48,6 @@ self.addEventListener('install', (event) => {
         add_resources_to_cache([
             './',
             './index.html',
-            './style/pico.trimmed.min.css',
-            './main.js',
         ])
     );
 });
