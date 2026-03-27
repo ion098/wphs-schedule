@@ -1,10 +1,13 @@
+'use strict';
+
 const md_string = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
 
 const time_str_to_min = (time_str) => {
     const [hour, min] = time_str.split(":").map((str) => Number(str));
-    // Times between 12:00 - 6:00 are treated as PM, all other time are treated as AM.
+    /* Times between 12:00 - 6:00 are treated as PM, 
+    all other time are treated as AM. */
     return min + 60 * (hour % 12) + ((hour % 12 <= 6) ? 12 * 60 : 0);
-}
+};
 
 const html = (strings, ...values) =>
     strings.reduce((acc, str, i) => {
