@@ -1,16 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <defs>
-    <style>
-      /* See https://sites.google.com/rjuhsd.us/westparklogoguide/branding-fonts */
-      @font-face {
-        font-family: 'Raleway';
-        font-style: normal;
-        font-weight: 700;
-        src: url('data-url:./raleway_subsetted.woff2') format('woff2');
-      }
-    </style>
-  </defs>
   <!-- See https://sites.google.com/rjuhsd.us/westparklogoguide/branding-colors -->
   <rect width="100" height="100" rx="20" fill="#0c2340" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Raleway" font-weight="700" font-size="65" fill="#b5a66b">S</text>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="65" fill="#b5a66b">S</text>
 </svg>
