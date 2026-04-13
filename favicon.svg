@@ -12,5 +12,5 @@
   </defs>
   <!-- See https://sites.google.com/rjuhsd.us/westparklogoguide/branding-colors -->
   <rect width="100" height="100" rx="20" fill="#0c2340" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Raleway sans-serif" font-weight="bold" font-size="65" fill="#b5a66b">S</text>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Raleway" font-weight="700" font-size="65" fill="#b5a66b">S</text>
 </svg>
