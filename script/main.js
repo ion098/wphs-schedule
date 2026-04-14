@@ -52,6 +52,7 @@ const one_lunch_template = (header, times) => html`
 const all_schedules = [
     {
         selector_func: (day = (new Date()).getDay()) => (day === 0 || day === 6),
+        hidden: true,
         template: html`
             <article>
                 <header>
@@ -234,7 +235,7 @@ const main = () => {
         <hr>
         <h2>All Schedules</h2>
         <div class="grid-container">
-            ${all_schedules.map((schedule) => schedule.template).join("")}
+            ${all_schedules.filter((schedule) => !schedule?.hidden).map((schedule) => schedule.template).join("")}
         </div>
     `;
 
