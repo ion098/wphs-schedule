@@ -11,7 +11,7 @@ const time_str_to_min = (time_str) => {
 
 const html = (strings, ...values) =>
     strings.reduce((acc, str, i) => {
-        return acc + str + (values[i] || '');
+        return acc + str + (values[i] ?? '');
     }, '');
 
 const date_template = (name, start, end) => {
@@ -50,6 +50,19 @@ const one_lunch_template = (header, times) => html`
 `;
 
 const all_schedules = [
+    {
+        selector_func: (day = (new Date()).getDay()) => (day === 0 || day === 6),
+        template: html`
+            <article>
+                <header>
+                    <h2>Weekends</h2>
+                </header>
+                <div>
+                    No school today!
+                </div>
+            </article>
+        `
+    },
     {
         selector_func: (day = (new Date()).getDay()) => (day === 1 || day === 5),
         template: two_lunch_template("Mondays / Fridays", [
@@ -182,21 +195,6 @@ const all_schedules = [
     },
 ];
 
-const fallback_schedule = {
-    template: html`
-        <article>
-            <header>
-                <h2>Weekends</h2>
-            </header>
-            <div>
-                No school today!
-            </div>
-        </article>
-    `
-};
-
-const current_schedule = all_schedules.findLast((schedule) => schedule.selector_func()) ?? fallback_schedule;
-
 const main = () => {
     const find_highlight = () => {
         const now = new Date();
@@ -226,6 +224,8 @@ const main = () => {
     if (prev_select) {
         document.getElementById(prev_select)["checked"] = true;
     }
+
+    const current_schedule = all_schedules.findLast((schedule) => schedule.selector_func());
 
     document.querySelector("main").innerHTML = html`
         <div id="current-sched">
