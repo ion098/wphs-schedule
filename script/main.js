@@ -213,6 +213,8 @@ const main = () => {
                 el.classList.remove("highlight");
             }
         });
+
+        requestAnimationFrame(find_highlight);
     };
 
     ["select-lunch-both", "select-lunch-1", "select-lunch-2"].forEach((id) => {
@@ -240,7 +242,6 @@ const main = () => {
     `;
 
     find_highlight();
-    setInterval(find_highlight, 1000 * 60);
 };
 
 navigator.serviceWorker.register(new URL('/service_worker.js', import.meta.url), { scope: "/" });
