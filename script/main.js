@@ -157,11 +157,18 @@ const all_schedules = [
     },
     {
         selector_func: () => (["8/8", "1/30", "5/22"].includes(md_string(new Date()))),
-        template: one_lunch_template("Rally", [
+        template: two_lunch_template("Rally", [
             ["Period 1:", "8:30", "9:49"],
             ["Period 2:", "9:57", "11:16"],
             ["Lunch:", "11:16", "11:46"],
             ["Period 3:", "11:54", "1:13"],
+            ["Rally:", "1:13", "1:48"],
+            ["Period 4:", "2:01", "3:20"]
+        ], [
+            ["Period 1:", "8:30", "9:49"],
+            ["Period 2:", "9:57", "11:16"],
+            ["Period 3:", "11:24", "12:43"],
+            ["Lunch:", "12:43", "1:13"],
             ["Rally:", "1:13", "1:48"],
             ["Period 4:", "2:01", "3:20"]
         ])
